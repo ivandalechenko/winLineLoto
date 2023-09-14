@@ -18,10 +18,16 @@
     justify-content: center;
 }
 .loto{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 2vh;
     &_element{
         canvas{
             position: relative;
             z-index: 2;
+            transition: opacity 1200ms;
+            opacity: 1;
         }
         &_img{
             top: -125px;
@@ -32,4 +38,8 @@
             }
         }
     }
+}
+
+.onone{
+    opacity: 0 !important;
 }

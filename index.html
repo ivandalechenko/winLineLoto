@@ -21,48 +21,104 @@
                     <img src="img/loto2500.svg" alt="">
                 </div>
             </div>
+            <div class="loto_element">
+                <canvas id="loto_element_2">
+                </canvas>
+                <div class="free_image loto_element_img">
+                    <img src="img/loto5000.svg" alt="">
+                </div>
+            </div>
+            <div class="loto_element">
+                <canvas id="loto_element_3">
+                </canvas>
+                <div class="free_image loto_element_img">
+                    <img src="img/loto2500.svg" alt="">
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
+        var solvedLoto = 0;
 
-        var canvas = document.getElementById("loto_element_1");
-        var cCoords = canvas.getBoundingClientRect()
-        var ctx = canvas.getContext("2d");
-        canvas.width = 300
-        canvas.height = 120
+        var canvases = [];
+        var cCoords = [];
+        var ctxs = [];
+        var topLayerImg = new Image();
+        topLayerImg.src = "img/topLayer.svg";
 
-        ctx.fillCircle = function (x, y, radius, fillColor) {
+        fillCircle = function (x, y, radius, fillColor) {
             this.fillStyle = fillColor;
             this.beginPath();
             this.moveTo(x, y);
             this.arc(x, y, radius, 0, Math.PI * 2, false);
             this.fill();
         };
-        canvas.ontouchstart = function (e) {
-            this.isDrawing = true;
-        }
-        canvas.ontouchend = function (e) {
-            this.isDrawing = false;
-        }
-        canvas.ontouchmove = function (e) {
-            if (!canvas.isDrawing)
-                return;
-            var x = e.touches[0].pageX - cCoords.left;
-            var y = e.touches[0].pageY - cCoords.top;
-            var radius = 25;
-            var fillColor = '#fff';
-            ctx.fillCircle(x, y, radius, fillColor);
-        }
 
-        var topLayerImg = new Image();
-        topLayerImg.src = "img/topLayer.svg";
+        for (let i = 0; i < 3; i++) {
+            canvases.push(document.getElementById("loto_element_" + (i + 1)));
+            cCoords.push(canvases[i].getBoundingClientRect());
+            ctxs.push(canvases[i].getContext("2d"));
+            canvases[i].width = 300;
+            canvases[i].height = 120;
+
+            canvases[i].ontouchstart = function (e) {
+                this.isDrawing = true;
+            }
+            canvases[i].ontouchend = function (e) {
+                this.isDrawing = false;
+                ctxs[i].checkVision();
+            }
+            ctxs[i].checkVision = function () {
+                var maxAlpha = 300 * 120 * 255;
+                var sumAlpha = 0;
+                for (let j = 0; j < 300; j++) {
+                    for (let k = 0; k < 120; k++) {
+                        sumAlpha += this.getImageData(j, k, 1, 1).data[0];
+                    }
+                }
+                console.log('MA = ' + maxAlpha + ' | MA/2 = ' + maxAlpha / 2 + ' | SA = ' + sumAlpha)
+                if (sumAlpha < maxAlpha / 2) {
+                    console.log('Solved')
+                    canvases[i].classList.add('onone')
+                    solvedLoto += 1;
+                } else {
+                    console.log('Not solved')
+                }
+            }
+
+            canvases[i].ontouchmove = function (e) {
+                if (!canvases[i].isDrawing)
+                    return;
+                var x = e.touches[0].pageX - cCoords[i].left;
+                var y = e.touches[0].pageY - cCoords[i].top - 30;
+                // console.log('x:' + x + "y:" + y)
+                var radius = 25;
+                var fillColor = '#fff';
+                ctxs[i].fillCircle(x, y, radius, fillColor);
+            }
+
+            ctxs[i].fillCircle = function (x, y, radius, fillColor) {
+                this.fillStyle = fillColor;
+                this.beginPath();
+                this.moveTo(x, y);
+                this.arc(x, y, radius, 0, Math.PI * 2, false);
+                this.fill();
+            };
+        }
 
         topLayerImg.onload = function () {
-            ctx.drawImage(topLayerImg, 0, 0, 300, 120);
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.fillCircle()
+            for (let i = 0; i < 3; i++) {
+                ctxs[i].drawImage(topLayerImg, 0, 0, 300, 120);
+                ctxs[i].globalCompositeOperation = 'destination-out';
+                ctxs[i].fillCircle()
+            }
         };
+
+
+
+
+
 
     </script>
 </body>
