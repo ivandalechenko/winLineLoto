@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOTO</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="header">
+
+        </div>
+        <div class="loto">
+            <canvas id="loto_element_1">
+            </canvas>
+            <div class="free_image loto_element">
+                <img src="img/loto2500.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var c = document.getElementById("loto_element_1");
+        var ctx = c.getContext("2d");
+        c.width = 300
+        c.height = 120
+
+        ctx.fillCircle = function (x, y, radius, fillColor) {
+            this.fillStyle = fillColor;
+            this.beginPath();
+            this.moveTo(x, y);
+            this.arc(x, y, radius, 0, Math.PI * 2, false);
+            this.fill();
+        };
+
+        c.ontouchstart = function (e) {
+            c.isDrawing = true;
+        }
+        c.ontouchend = function (e) {
+            c.isDrawing = false;
+        }
+        c.ontouchmove = function (e) {
+            if (!c.isDrawing)
+                return;
+            var x = e.touches[0].pageX;
+            var y = e.touches[0].pageY;
+            var radius = 25;
+            var fillColor = '#fff';
+            ctx.fillCircle(x, y, radius, fillColor);
+        }
+        var topLayerImg = new Image();
+        topLayerImg.onload = function () {
+            ctx.drawImage(topLayerImg, 0, 0, 300, 120);
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.fillCircle()
+        };
+        topLayerImg.src = "img/topLayer.svg";
+        // ctx.fillCircle(150, 60, 200, "#C51")
+        // ctx.globalCompositeOperation = 'destination-out';
+        // ctx.fillCircle()
+    </script>
+</body>
+
+</html>
