@@ -11,23 +11,26 @@
 <body>
     <div class="content">
         <div class="header">
-
+            <img src="img/header.svg" alt="">
         </div>
         <div class="loto">
-            <canvas id="loto_element_1">
-            </canvas>
-            <div class="free_image loto_element">
-                <img src="img/loto2500.svg" alt="">
+            <div class="loto_element">
+                <canvas id="loto_element_1">
+                </canvas>
+                <div class="free_image loto_element_img">
+                    <img src="img/loto2500.svg" alt="">
+                </div>
             </div>
         </div>
     </div>
 
-
     <script>
-        var c = document.getElementById("loto_element_1");
-        var ctx = c.getContext("2d");
-        c.width = 300
-        c.height = 120
+
+        var canvas = document.getElementById("loto_element_1");
+        var cCoords = canvas.getBoundingClientRect()
+        var ctx = canvas.getContext("2d");
+        canvas.width = 300
+        canvas.height = 120
 
         ctx.fillCircle = function (x, y, radius, fillColor) {
             this.fillStyle = fillColor;
@@ -36,32 +39,31 @@
             this.arc(x, y, radius, 0, Math.PI * 2, false);
             this.fill();
         };
-
-        c.ontouchstart = function (e) {
-            c.isDrawing = true;
+        canvas.ontouchstart = function (e) {
+            this.isDrawing = true;
         }
-        c.ontouchend = function (e) {
-            c.isDrawing = false;
+        canvas.ontouchend = function (e) {
+            this.isDrawing = false;
         }
-        c.ontouchmove = function (e) {
-            if (!c.isDrawing)
+        canvas.ontouchmove = function (e) {
+            if (!canvas.isDrawing)
                 return;
-            var x = e.touches[0].pageX;
-            var y = e.touches[0].pageY;
+            var x = e.touches[0].pageX - cCoords.left;
+            var y = e.touches[0].pageY - cCoords.top;
             var radius = 25;
             var fillColor = '#fff';
             ctx.fillCircle(x, y, radius, fillColor);
         }
+
         var topLayerImg = new Image();
+        topLayerImg.src = "img/topLayer.svg";
+
         topLayerImg.onload = function () {
             ctx.drawImage(topLayerImg, 0, 0, 300, 120);
             ctx.globalCompositeOperation = 'destination-out';
             ctx.fillCircle()
         };
-        topLayerImg.src = "img/topLayer.svg";
-        // ctx.fillCircle(150, 60, 200, "#C51")
-        // ctx.globalCompositeOperation = 'destination-out';
-        // ctx.fillCircle()
+
     </script>
 </body>
 
