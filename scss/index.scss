@@ -11,30 +11,55 @@
     align-content: center;
     flex-wrap: wrap;
     row-gap: 5vh;
+    overflow: hidden;
+    @media (min-aspect-ratio: 1/1) {
+        row-gap: 10vh;
+    }
 }
 .header{
     width: 100%;
     display: flex;
     justify-content: center;
+    img{
+        @media (min-aspect-ratio: 1/1) {
+            height: 50vh;
+            max-width: 90vw;
+        }
+        @media (max-aspect-ratio: 1/1) {
+            width: 90vw;
+        }
+    }
 }
 .loto{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 2vh;
+    column-gap: 3vw;
     &_element{
         canvas{
             position: relative;
             z-index: 2;
             transition: opacity 1200ms;
             opacity: 1;
+            // width: 90vw;
+            height: 18vh;
+            object-fit: contain;
+            @media (min-aspect-ratio: 1/1) {
+                width: 30vw;
+            }
+            @media (max-aspect-ratio: 1/1) {
+                max-width: 90vw;
+            }
         }
         &_img{
-            top: -125px;
             z-index: 1;
             img, svg{
-                width: 300px;
-                height: 120px;
+                height: 18vh;
+                max-width: 90vw;
+                @media (min-aspect-ratio: 1/1) {
+                    width: 30vw;
+                }
             }
         }
     }
@@ -42,4 +67,18 @@
 
 .onone{
     opacity: 0 !important;
+}
+.solved{
+    animation: solved_anim 1s 600ms;
+}
+@keyframes solved_anim {
+    0%{
+        transform: scale(1);
+    }
+    20%{
+        transform: scale(1.15);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
