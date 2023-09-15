@@ -5,15 +5,85 @@
     background: linear-gradient(169deg, #0C1178 7.1%, #000058 49.56%, #0F147D 85.44%);
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
-    flex-wrap: wrap;
-    row-gap: 5vh;
-    overflow: hidden;
+
+    #content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+        row-gap: 5vh;
+        transition: opacity 1s;
+    }
     @media (min-aspect-ratio: 1/1) {
         row-gap: 10vh;
+    }
+}
+#win{
+    width: 0;
+    height: 0;
+    transition: opacity 1s;
+}
+#download{
+    width: 0;
+    height: 0;
+    transition: opacity 1s;
+}
+.download_inner{
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 1vh 1vw;
+        position: relative;
+        z-index: 4;
+        img, svg{
+            width: 80vw;
+            height: 80vh;
+            max-width: 80vw;
+            max-height: 80vh;
+            
+        }
+        button{
+            background: none;
+        }
+    }
+
+.win_inner{
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 1vh 1vw;
+        flex-wrap: wrap;
+        row-gap: 5vh;
+        position: relative;
+        z-index: 4;
+        img, svg{
+            width: 80vw;
+            max-height: 45vh;
+        }
+    @media (min-aspect-ratio: 1.5/1) {
+        flex-wrap: nowrap;
+        column-gap: 4vw;
+        img, svg{
+            width: 50vw;
+        }
+        .winChip{
+            width: 30vw;
+        }
+        
     }
 }
 .header{
@@ -23,10 +93,10 @@
     img{
         @media (min-aspect-ratio: 1/1) {
             height: 50vh;
-            max-width: 90vw;
+            max-width: 80vw;
         }
         @media (max-aspect-ratio: 1/1) {
-            width: 90vw;
+            width: 80vw;
         }
     }
 }
@@ -34,7 +104,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 2vh;
+    row-gap: 1vh;
     column-gap: 3vw;
     &_element{
         canvas{
@@ -42,28 +112,30 @@
             z-index: 2;
             transition: opacity 1200ms;
             opacity: 1;
-            // width: 90vw;
-            height: 18vh;
+            height: 14vh;
             object-fit: contain;
             @media (min-aspect-ratio: 1/1) {
                 width: 30vw;
+                height: 20vh;
             }
             @media (max-aspect-ratio: 1/1) {
-                max-width: 90vw;
+                max-width: 74vw;
             }
         }
         &_img{
             z-index: 1;
             img, svg{
-                height: 18vh;
-                max-width: 90vw;
+                height: 14vh;
+                max-width: 74vw;
                 @media (min-aspect-ratio: 1/1) {
                     width: 30vw;
+                    height: 20vh;
                 }
             }
         }
     }
 }
+
 
 .onone{
     opacity: 0 !important;
@@ -80,5 +152,183 @@
     }
     100%{
         transform: scale(1);
+    }
+}
+.spin{
+    animation: spin 10s infinite linear;
+}   
+
+@keyframes spin {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+.decor{
+    width: 0;
+    height: 0;
+    &_inner{
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    .free_image{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .chip_large_1{
+        img,svg{
+            width: 100vw;
+            height: 100vh;
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+    }
+    .chip_large_2{
+        top: -37vh;
+        left: -52vw;
+        img,svg{
+            width: 50vw;
+            height: 50vh;
+            max-width: 50vw;
+            max-height: 50vh;
+            object-fit: contain;
+        }
+    }
+    .rub_coin{
+        top: -40vh;
+        left: 35vw;
+        img,svg{
+            width: 40vw;
+            height: 40vh;
+            max-width: 40vw;
+            max-height: 40vh;
+            object-fit: contain;
+        }
+    }
+    .rub_coin_large{
+        top: 39vh;
+        left: 26vw;
+        img,svg{
+            width: 40vw;
+            height: 40vh;
+            max-width: 40vw;
+            max-height: 40vh;
+            object-fit: contain;
+        }
+    }
+    .chip1{
+        top: 40vh;
+        left: -30vw;
+        img,svg{
+            width: 25vw;
+            height: 25vh;
+            max-width: 25vw;
+            max-height: 25vh;
+            object-fit: contain;
+        }
+    }
+    .chip2{
+        top: -10vh;
+        left: -43vw;
+        img,svg{
+            width: 10vw;
+            height: 10vh;
+            max-width: 10vw;
+            max-height: 10vh;
+            object-fit: contain;
+        }
+    }
+    .chip3{
+        top: -18vh;
+        left: 36vw;
+        img,svg{
+            width: 18vw;
+            height: 18vh;
+            max-width: 18vw;
+            max-height: 18vh;
+            object-fit: contain;
+            transform: rotate(180deg);
+        }
+    }
+    .chip4{
+        top: 18vh;
+        left: 44vw;
+        img,svg{
+            width: 12vw;
+            height: 12vh;
+            max-width: 12vw;
+            max-height: 12vh;
+            object-fit: contain;
+            transform: rotate(270deg);
+        }
+    }
+    .finger{
+        top: -2vh;
+        left: -18vw;
+        z-index: 3;
+        transition: opacity 400ms;
+        
+        @media (min-aspect-ratio: 316/428) {
+            top: 12vh;
+            left: -40vw;
+        }
+        @media (min-aspect-ratio: 1/1) {
+            top: 40vh;
+            left: -36vw;
+        }
+        img,svg{
+            width: 20vw;
+            height: 20vh;
+            max-width: 20vw;
+            max-height: 20vh;
+            animation: finger_anim 4s ease-in-out infinite alternate;
+            @media (min-aspect-ratio: 1/1) {
+                animation: finger_anim_horizontal 4s ease-in-out infinite alternate;
+            }
+        }
+    }
+    @keyframes finger_anim {
+        0%{
+            transform: scale(1) translateX(0)  translateY(0);
+        }
+        30%{
+            transform: scale(1) translateX(0)  translateY(0);
+        }
+        40%{
+            transform: scale(0.90) translateX(0) translateY(-2vh);
+        }
+        70%{
+            transform: scale(0.90) translateX(40vw) translateY(-2vh);
+        }
+        100%{
+            transform: scale(0.90) translateX(-2vw) translateY(-2vh);
+        }
+        
+    }
+    @keyframes finger_anim_horizontal {
+        0%{
+            transform: scale(1) translateX(0)  translateY(0);
+        }
+        30%{
+            transform: scale(1) translateX(0)  translateY(0);
+        }
+        40%{
+            transform: scale(0.90) translateX(0) translateY(-2vh);
+        }
+        70%{
+            transform: scale(0.90) translateX(8vw) translateY(-2vh);
+        }
+        100%{
+            transform: scale(0.90) translateX(-2vw) translateY(-2vh);
+        }
+        
     }
 }

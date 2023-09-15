@@ -45,8 +45,11 @@ a:hover, button:hover{
 }
 
 .dnone{
-    display: none;
+    display: none !important;
 }
 a{
     text-decoration: none;
+}
+body{
+    height: 100vh;
 }
